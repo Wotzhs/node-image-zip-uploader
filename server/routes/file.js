@@ -16,7 +16,7 @@ router.get('/:id', (req, res)=>{
 
 router.post('/image', multerConfig.image().single('file'), (req, res)=>{
 	console.log(req.file);
-	res.send("asdada")
+	// return a unique link for the uploaded file
 });
 
 router.post('/zip', multerConfig.zip().single('file'), (req, res)=>{
@@ -29,15 +29,14 @@ router.post('/zip', multerConfig.zip().single('file'), (req, res)=>{
 
 		// extact only image files
 		if (zipEntry.entryName.match(/\.(jpg|jpeg|png)$/)){
-			zip.extractEntryTo( zipEntry.entryName,'./public/tmp/', true, false)
-
-			// rename file on extract to upload path to avoid name conflict
-			fs.rename(req.file.destination+'/'+zipEntry.entryName, './public/upload/'+(Date.now()+path.extname(zipEntry.entryName)));
-
-			// delete uploaded zip file after extraction
-			fs.unlink(req.file.path);
+			zip.extractEntryTo( zipEntry.entryName,'./public/tmp/', true, false)			
 		}
+		// rename file on extract to upload path to avoid name conflict
+		var newName = Date.now()+path.extname(zipEntry.entryName);
+		fs.rename(req.file.destination+'/'+zipEntry.entryName, './public/upload/'+newName);	
 	})
+	// delete uploaded zip file after extraction
+	fs.unlink(req.file.path);
 });
 
 
