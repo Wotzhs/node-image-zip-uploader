@@ -5,6 +5,7 @@ var path = require('path');
 var multerConfig = require('../../config/multer.js');
 var AdmZip = require('adm-zip');
 var fs = require('fs');
+var Jimp = require('jimp');
 
 router.use((req, res, next)=>{
 	next();
@@ -15,8 +16,14 @@ router.get('/:id', (req, res)=>{
 })
 
 router.post('/image', multerConfig.image().single('file'), (req, res)=>{
-	console.log(req.file);
-	// return a unique link for the uploaded file
+	Jimp.read(req.file.path, (err, image)=>{
+		if (image.bitmap.width > 128 && image.bitmap.height > 128){
+			image.resize(64, 64)
+				 .write("./public/upload/"+req.file.filename.split('.')[0]+"-thumb-big."+req.file.filename.split('.').pop())
+			image.resize(32, 32)
+				 .write("./public/upload/"+req.file.filename.split('.')[0]+"-thumb-small."+req.file.filename.split('.').pop())	 
+		}
+	})
 });
 
 router.post('/zip', multerConfig.zip().single('file'), (req, res)=>{

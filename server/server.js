@@ -8,7 +8,7 @@ var routes = require('./routes/file.js');
 app.use('/file', routes);
 
 app.get('/', (req, res)=>{
-	res.sendFile(path.resolve(__dirname, '../client/index.html'))
+	res.sendFile(path.resolve(__dirname, '../public/index.html'))
 });
 
 var port = 3000
