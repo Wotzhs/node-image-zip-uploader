@@ -8,7 +8,10 @@ const imageProcessor = require('./image.js');
 module.exports = {
 
 	process: (file)=>{
+
+		// array to store uniq_ref of each images
 		var refs = []
+
 		const zip = new AdmZip(file.path);
 		const zipEntries = zip.getEntries();
 
@@ -36,6 +39,8 @@ module.exports = {
 			// process each images to get thumbnails
 			refs.push(imageProcessor.process({filename: newName, path: 'public\\upload\\'+newName}))
 		})
+
+		// return the arrays of uniq_refs
 		return refs
 	}
 }

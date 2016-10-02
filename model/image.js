@@ -1,9 +1,8 @@
 'use strict'
 
 const Jimp = require('jimp');
-const db = require('./database.js');
+const db = require('../helper/dbops.js');
 const random = require('../helper/randalphanum.js');
-
 
 module.exports = {
 	process: (file)=>{

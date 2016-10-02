@@ -1,11 +1,10 @@
 'use strict'
 
 const router = require('express').Router();
-
 const multerConfig = require('../../config/multer.js');
 const imageProcessor = require('../../model/image.js');
 const unzipper = require('../../model/zip.js');
-const db = require('../../model/database.js');
+const db = require('../../helper/dbops.js');
 
 router.use((req, res, next)=>{
 	next();
@@ -29,15 +28,16 @@ router.get('/:id', (req, res)=>{
 	})
 })
 
+// handler for single image
 router.post('/image', multerConfig.image().single('file'), (req, res)=>{
-	console.log(req.file)
 	res.send(imageProcessor.process(req.file))
 	console.log("processed")
 });
 
+// handler for zipped images
 router.post('/zip', multerConfig.zip().single('file'), (req, res)=>{
-	console.log(req.file);
 	res.send(unzipper.process(req.file));
+	console.log("processed")
 });
 
 
