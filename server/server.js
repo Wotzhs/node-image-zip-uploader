@@ -6,7 +6,10 @@ const path = require('path');
 const routes = require('./routes/file.js');
 const db = require('../model/database.js');
 
-
+app.use('/public/upload/*', (req, res, next)=>{
+	res.attachment();
+	next();
+})
 app.use('/public/upload', express.static(path.resolve(__dirname, '../public/upload')))
 app.use('/file', routes);
 console.log(path.resolve(__dirname, '../public'))
