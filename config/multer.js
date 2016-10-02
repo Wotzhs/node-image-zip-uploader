@@ -1,12 +1,13 @@
 'use strict'
 
-var multer = require('multer');
-var path = require('path');
+const multer = require('multer');
+const path = require('path');
 
 // multer config for uploading image
-var imgUpload = multer({ 
+const imgUpload = multer({ 
 	storage: multer.diskStorage({
 		destination: (req, file, cb)=>{
+			console.log("im imgupload destination")
 			cb(null, './public/upload');
 		},
 		filename: (req, file, cb)=>{
@@ -14,6 +15,7 @@ var imgUpload = multer({
 		}
 	}),
 	fileFilter: (req, file, cb)=>{
+		console.log("im imgupload filefilter")
 		if(file.originalname.match(/\.(jpg|jpeg|png)$/)){
 			return cb(null, true)
 		}
@@ -22,7 +24,7 @@ var imgUpload = multer({
 });
 
 // multer config for uploading zip
-var zipUpload = multer({ 
+const zipUpload = multer({ 
 	storage: multer.diskStorage({
 		destination: (req, file, cb)=>{
 			cb(null, './public/tmp');

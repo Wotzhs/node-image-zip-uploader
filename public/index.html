@@ -14,16 +14,15 @@
 		
 		'use strict'
 
-		
-		
-
-		var permlink = (link) =>{
+		var permlink = (links) =>{
 			$('#permlink').remove();
-			$('body').append("<div id='permlink'>"+
-							 	"<label>Permanent Link:-</label>"+
-							 	"<h3>"+link+"</h3>"+
-							 "</div>"
-			)
+			for(var i = 0; i < links.length; i++)
+				$('body').append("<div id='permlink'>"+
+								 	"<label>Permanent Link:-</label>"+
+								 	'<h3><a href="http://localhost:3000/file/'+links[i]+'">http://localhost:3000/file/'+links[i]+'</a></h3>'+
+								 "</div>"
+				)
+			
 		}
 
 		var postreq = (url) =>{
